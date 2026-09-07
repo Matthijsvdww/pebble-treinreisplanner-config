@@ -33,7 +33,7 @@ button.primary{width:100%;padding:12px;font-size:16px;background:#0a6cff;color:#
 </section>
 
 <section>
-  <h2>Routes (max. 5)</h2>
+  <h2>Routes (max. 10)</h2>
   <div id="routes"></div>
   <label for="from" style="margin-top:16px">Van</label>
   <input type="text" id="from" placeholder="typ een stationaam…" autocomplete="off">
@@ -66,7 +66,7 @@ function getQueryParam(name, def){
 
 // Pre-fill via ?data= (index.js stuurt je huidige config mee)
 var cfg = loadInitial();
-var routes = (cfg.routes || []).slice(0, 5);
+var routes = (cfg.routes || []).slice(0, 10);
 function loadInitial(){
   try {
     var m = location.search.match(/[?&]data=([^&]+)/);
@@ -131,7 +131,7 @@ document.getElementById('add').onclick = function(){
   var f = fromP.get(), t = toP.get();
   if (!f || !t) { err.textContent = 'Kies eerst een station bij Van en Naar uit de lijst.'; return; }
   if (f.c === t.c) { err.textContent = 'Van en Naar mogen niet hetzelfde station zijn.'; return; }
-  if (routes.length >= 5) { err.textContent = 'Maximum van 5 routes bereikt.'; return; }
+  if (routes.length >= 10) { err.textContent = 'Maximum van 10 routes bereikt.'; return; }
   if (routes.some(function(r){ return r.from === f.c && r.to === t.c; })) { err.textContent = 'Deze route bestaat al.'; return; }
   err.textContent = '';
   routes.push({ from: f.c, to: t.c, label: f.n + ' → ' + t.n });
