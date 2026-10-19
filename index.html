@@ -165,15 +165,18 @@ var return_to   = getQueryParam('return_to', 'pebblejs://close#');
 var fromPebble  = getQueryParam('from', '') === 'pebble'; // door index.js gezet
 document.getElementById('save').onclick = function(){
     function num(id, def, lo, hi) {
-    var v = parseInt(document.getElementById(id).value, 10);
+    var el = document.getElementById(id);
+    if (!el) return def;                        // veld ontbreekt: standaard gebruiken
+    var v = parseInt(el.value, 10);
     return (isNaN(v) || v < lo || v > hi) ? def : v;
   }
+  var disrEl = document.getElementById('disr');
   var settings = {
     vibeMin:     num('vibeMin', 5, 0, 30),
     wakeMin:     num('wakeMin', 10, 5, 30),
     pollWaitSec: num('pollWaitSec', 60, 30, 300),
     pollRideSec: num('pollRideSec', 120, 30, 300),
-    disr: document.getElementById('disr').checked
+    disr: disrEl ? disrEl.checked : true
   };
   var json = JSON.stringify({ apiKey: keyEl.value.trim(), routes: routes, settings: settings })
   if (fromPebble) {
