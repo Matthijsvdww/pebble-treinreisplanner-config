@@ -89,6 +89,16 @@ function loadInitial(){
 var keyEl = document.getElementById('key');
 keyEl.value = cfg.apiKey || '';
 document.getElementById('showkey').onchange = function(){ keyEl.type = this.checked ? 'text' : 'password'; };
+  // Instellingen vullen vanuit ?data= (config round-trip)
+(function fillSettings(){
+  var s = (cfg.settings || {});
+  ['vibeMin','wakeMin','pollWaitSec','pollRideSec'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el && typeof s[id] === 'number') el.value = s[id];
+  });
+  var d = document.getElementById('disr');
+  if (d) d.checked = (s.disr !== false);
+})();
 
 function renderRoutes(){
   var box = document.getElementById('routes');
